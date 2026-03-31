@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tighten the CSP: allow the M365 Copilot iframe origin and nothing else. -->
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="
+      default-src 'self';
+      script-src 'self';
+      style-src 'self' 'unsafe-inline';
+      frame-src https://m365.cloud.microsoft https://copilot.microsoft.com https://www.microsoft365.com;
+      img-src 'self' data: https:;
+      connect-src 'none';
+    "
+  />
+  <title>AppChatty</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-brand">
+      <svg class="header-logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5"/>
+        <path
+          d="M8 12.5C8.5 10 10.5 8.5 12 8.5C13.5 8.5 15 10 15.5 12C16 14 15 16 12 16.5"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="12" cy="17" r="1" fill="currentColor"/>
+      </svg>
+      <span class="header-title">AppChatty</span>
+    </div>
+
+    <div class="header-actions">
+      <button
+        id="btn-refresh"
+        class="icon-btn"
+        title="Refresh agent"
+        aria-label="Refresh agent"
+      >
+        <!-- Refresh icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 20v-6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.93 14.93A10 10 0 1 0 6.34 6.34L4 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <button
+        id="btn-close"
+        class="icon-btn"
+        title="Hide panel"
+        aria-label="Hide panel"
+      >
+        <!-- X icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Active-app banner ───────────────────────────────── -->
+  <div id="app-banner" class="app-banner" aria-live="polite">
+    <span class="app-banner-label">Assisting:</span>
+    <span id="app-banner-name" class="app-banner-name">Detecting…</span>
+  </div>
+
+  <!-- ── Copilot agent iframe ────────────────────────────── -->
+  <div id="agent-container" class="agent-container">
+    <iframe
+      id="agent-frame"
+      class="agent-frame"
+      title="M365 Copilot Agent"
+      allow="microphone; camera"
+    ></iframe>
+
+    <!-- Shown while the iframe is loading / no agent is mapped. -->
+    <div id="loading-overlay" class="loading-overlay" aria-live="polite">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <p id="loading-message" class="loading-message">
+        Loading Copilot agent…
+      </p>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+/* ============================================================
+   AppChatty – Renderer Styles
+   Design language: Microsoft Fluent / Copilot-inspired
+   ============================================================ */
+
+/* ── Reset & tokens ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Brand colours */
+  --color-brand:        #0078d4;
+  --color-brand-dark:   #005a9e;
+  --color-brand-light:  #c7e0f4;
+
+  /* Neutrals */
+  --color-bg:           #f3f2f1;
+  --color-surface:      #ffffff;
+  --color-border:       #e1dfdd;
+  --color-text:         #201f1e;
+  --color-text-subtle:  #605e5c;
+  --color-text-inverse: #ffffff;
+
+  /* Accents */
+  --color-success:      #107c10;
+  --color-warning:      #ffb900;
+
+  /* Spacing */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+
+  /* Typography */
+  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-xs:   11px;
+  --font-size-sm:   13px;
+  --font-size-base: 14px;
+  --font-size-lg:   16px;
+  --font-size-xl:   20px;
+
+  /* Geometry */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --header-h:   52px;
+  --banner-h:   36px;
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-md);
+  background: var(--color-brand);
+  color: var(--color-text-inverse);
+  z-index: 100;
+  user-select: none;
+  -webkit-app-region: drag; /* allow dragging the window from the header */
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header-logo {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--color-text-inverse);
+}
+
+.header-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--space-xs);
+  -webkit-app-region: no-drag;
+}
+
+/* ── Icon buttons ────────────────────────────────────────── */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-inverse);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.icon-btn:active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Active-app banner ───────────────────────────────────── */
+.app-banner {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  height: var(--banner-h);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0 var(--space-md);
+  background: var(--color-brand-light);
+  border-bottom: 1px solid var(--color-brand);
+  font-size: var(--font-size-sm);
+  z-index: 90;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-banner-label {
+  color: var(--color-brand-dark);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.app-banner-name {
+  color: var(--color-text);
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Agent container & iframe ────────────────────────────── */
+.agent-container {
+  position: absolute;
+  top: calc(var(--header-h) + var(--banner-h));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-surface);
+}
+
+.agent-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ── Loading overlay ─────────────────────────────────────── */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  background: var(--color-surface);
+  transition: opacity 0.3s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner */
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--color-brand-light);
+  border-top-color: var(--color-brand);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
+  text-align: center;
+  max-width: 260px;
+}
