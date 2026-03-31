@@ -20,6 +20,12 @@ namespace AppChatty
         /// <summary>M365 Copilot agent URL to load in the WebView2.</summary>
         public string Url { get; }
 
+        /// <summary>
+        /// <see langword="true"/> when this entry is the fallback/default
+        /// (i.e. no application-specific agent was matched).
+        /// </summary>
+        public bool IsDefault => string.IsNullOrEmpty(MatchKey);
+
         public AgentEntry(string matchKey, string label, string url)
         {
             MatchKey = matchKey ?? string.Empty;
