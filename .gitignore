@@ -1,0 +1,19 @@
+# .NET build artefacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+
+# NuGet
+packages/
+*.nupkg
+
+# Test results
+TestResults/
+*.trx
+
+# OS
+.DS_Store
+Thumbs.db

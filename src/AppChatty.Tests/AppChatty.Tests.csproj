@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Target net8.0 so tests run cross-platform (Linux CI / Windows).
+         The classes under test live in AppChatty.Core (netstandard2.0),
+         which is compatible with both net8.0 and net48. -->
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>AppChatty.Tests</RootNamespace>
+    <AssemblyName>AppChatty.Tests</AssemblyName>
+    <Nullable>disable</Nullable>
+    <LangVersion>8.0</LangVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework"    Version="3.4.3" />
+    <PackageReference Include="MSTest.TestAdapter"      Version="3.4.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk"  Version="17.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Tests exercise the pure-logic Core library only. -->
+    <ProjectReference Include="..\AppChatty.Core\AppChatty.Core.csproj" />
+  </ItemGroup>
+
+</Project>

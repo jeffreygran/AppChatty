@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>AppChatty</RootNamespace>
+    <AssemblyName>AppChatty</AssemblyName>
+    <Nullable>disable</Nullable>
+    <LangVersion>8.0</LangVersion>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WebView2: embed M365 Copilot inside the side panel -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Core business logic (AgentResolver, AgentEntry) -->
+    <ProjectReference Include="..\AppChatty.Core\AppChatty.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\icon.ico" />
+  </ItemGroup>
+
+</Project>
