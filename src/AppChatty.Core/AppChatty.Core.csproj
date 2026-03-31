@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- .NET Standard 2.0 is compatible with both .NET Framework 4.8 and
+         modern .NET (net8.0+), so the core logic can be tested cross-platform. -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>AppChatty</RootNamespace>
+    <AssemblyName>AppChatty.Core</AssemblyName>
+    <Nullable>disable</Nullable>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+</Project>
