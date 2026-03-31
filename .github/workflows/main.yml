@@ -1,0 +1,1 @@
+AppChatty - is a window-based application, that runs like a copilot loaded in the right side, that will provide guidance and assistance to the user to the legacy app that he is currently using. It will be setting on the task tray, if click the app will load like copilot and load the M365 Copilot agent specific to the app that is user currently using.
