@@ -257,7 +257,8 @@ namespace AppChatty
             Top = newTop;
 
             int newLeft = _dragStartFormLeft + deltaX;
-            newLeft = Math.Max(workArea.Left - Width + CollapsedTabWidth,
+            int effectiveWidth = _isCollapsed ? CollapsedTabWidth : Width;
+            newLeft = Math.Max(workArea.Left + CollapsedTabWidth - effectiveWidth,
                               Math.Min(workArea.Right - CollapsedTabWidth, newLeft));
             Left = newLeft;
         }
