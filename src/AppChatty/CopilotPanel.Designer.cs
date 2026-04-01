@@ -12,6 +12,7 @@ namespace AppChatty
         // Controls
         private Panel     pnlHeader;
         private Label     lblTitle;
+        private Button    btnMinimize;
         private Button    btnRefresh;
         private Button    btnClose;
         private Button    btnCollapse;
@@ -39,6 +40,7 @@ namespace AppChatty
             // ── Instantiate controls ───────────────────────────────────────
             pnlHeader   = new Panel();
             lblTitle    = new Label();
+            btnMinimize = new Button();
             btnRefresh  = new Button();
             btnClose    = new Button();
             btnCollapse = new Button();
@@ -54,7 +56,7 @@ namespace AppChatty
             pnlHeader.BackColor = Color.FromArgb(0, 120, 212); // Fluent brand blue
             pnlHeader.Dock      = DockStyle.Top;
             pnlHeader.Height    = 52;
-            pnlHeader.Controls.AddRange(new Control[] { lblTitle, btnRefresh, btnClose, btnCollapse });
+            pnlHeader.Controls.AddRange(new Control[] { lblTitle, btnRefresh, btnMinimize, btnClose, btnCollapse });
             pnlHeader.MouseDown += pnlHeader_MouseDown;
             pnlHeader.MouseMove += pnlHeader_MouseMove;
             pnlHeader.MouseUp   += pnlHeader_MouseUp;
@@ -104,6 +106,23 @@ namespace AppChatty
             btnClose.Anchor   = AnchorStyles.Top | AnchorStyles.Right;
             btnClose.Click   += btnClose_Click;
 
+            // ── btnMinimize (─) – minimize to tray ─────────────────────────
+            btnMinimize.Text      = "─";
+            btnMinimize.ForeColor = Color.White;
+            btnMinimize.BackColor = Color.Transparent;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.FlatAppearance.BorderSize        = 0;
+            btnMinimize.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(40, 255, 255, 255);
+            btnMinimize.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(70, 255, 255, 255);
+            btnMinimize.Font     = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            btnMinimize.Size     = new Size(36, 36);
+            btnMinimize.Location = new Point(296, 8);
+            btnMinimize.Cursor   = Cursors.Hand;
+            btnMinimize.Anchor   = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimize.Click   += btnMinimize_Click;
+
             // ── btnRefresh ─────────────────────────────────────────────────
             btnRefresh.Text      = "↺";
             btnRefresh.ForeColor = Color.White;
@@ -116,7 +135,7 @@ namespace AppChatty
                 Color.FromArgb(70, 255, 255, 255);
             btnRefresh.Font     = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             btnRefresh.Size     = new Size(36, 36);
-            btnRefresh.Location = new Point(296, 8);
+            btnRefresh.Location = new Point(256, 8);
             btnRefresh.Cursor   = Cursors.Hand;
             btnRefresh.Anchor   = AnchorStyles.Top | AnchorStyles.Right;
             btnRefresh.Click   += btnRefresh_Click;

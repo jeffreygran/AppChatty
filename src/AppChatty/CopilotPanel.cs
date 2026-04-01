@@ -24,10 +24,11 @@ namespace AppChatty
 
         private System.Windows.Forms.Timer _slideTimer;
 
-        // ── Drag (vertical repositioning) ─────────────────────────────────
+        // ── Drag (repositioning) ──────────────────────────────────────────
         private bool  _isDragging        = false;
         private Point _dragStartMouse;
         private int   _dragStartFormTop;
+        private int   _dragStartFormLeft;
 
         // ── Banner colour scheme ───────────────────────────────────────────
         private static readonly Color BannerColorDefault  = Color.FromArgb(199, 224, 244);
@@ -76,9 +77,15 @@ namespace AppChatty
         private void CollapsePanel()
         {
             _isCollapsed       = true;
+            btnMinimize.Visible = false;
             btnClose.Visible   = false;
             btnRefresh.Visible = false;
+            lblTitle.Visible   = false;
+            pnlBanner.Visible  = false;
+            webView.Visible    = false;
             btnCollapse.Text   = "►";
+            // Move collapse button into the visible collapsed tab area
+            btnCollapse.Location = new Point(4, 8);
 
             var workArea       = Screen.PrimaryScreen.WorkingArea;
             _slideTargetLeft   = workArea.Right - CollapsedTabWidth;
@@ -88,9 +95,15 @@ namespace AppChatty
         private void RestorePanel()
         {
             _isCollapsed       = false;
+            btnMinimize.Visible = true;
             btnClose.Visible   = true;
             btnRefresh.Visible = true;
+            lblTitle.Visible   = true;
+            pnlBanner.Visible  = true;
+            webView.Visible    = true;
             btnCollapse.Text   = "◄";
+            // Restore collapse button to its original position
+            btnCollapse.Location = new Point(376, 8);
 
             var workArea       = Screen.PrimaryScreen.WorkingArea;
             _slideTargetLeft   = workArea.Right - ExpandedWidth;
@@ -201,6 +214,8 @@ namespace AppChatty
 
         private void btnClose_Click(object sender, EventArgs e) => Hide();
 
+        private void btnMinimize_Click(object sender, EventArgs e) => Hide();
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             if (webView.CoreWebView2 != null)
@@ -215,15 +230,16 @@ namespace AppChatty
                 CollapsePanel();
         }
 
-        // ── Drag handlers (vertical repositioning) ─────────────────────────
+        // ── Drag handlers (repositioning) ──────────────────────────────────
 
         private void pnlHeader_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                _isDragging       = true;
-                _dragStartMouse   = Control.MousePosition;
-                _dragStartFormTop = Top;
+                _isDragging        = true;
+                _dragStartMouse    = Control.MousePosition;
+                _dragStartFormTop  = Top;
+                _dragStartFormLeft = Left;
             }
         }
 
@@ -231,13 +247,20 @@ namespace AppChatty
         {
             if (!_isDragging) return;
 
+            int deltaX = Control.MousePosition.X - _dragStartMouse.X;
             int deltaY = Control.MousePosition.Y - _dragStartMouse.Y;
             var workArea = Screen.PrimaryScreen.WorkingArea;
 
-            // Clamp so the panel remains within the vertical working area
+            // Clamp so the panel remains within the working area
             int newTop = _dragStartFormTop + deltaY;
             newTop = Math.Max(workArea.Top, Math.Min(workArea.Bottom - Height, newTop));
             Top = newTop;
+
+            int newLeft = _dragStartFormLeft + deltaX;
+            int effectiveWidth = _isCollapsed ? CollapsedTabWidth : Width;
+            newLeft = Math.Max(workArea.Left + CollapsedTabWidth - effectiveWidth,
+                              Math.Min(workArea.Right - CollapsedTabWidth, newLeft));
+            Left = newLeft;
         }
 
         private void pnlHeader_MouseUp(object sender, MouseEventArgs e)
